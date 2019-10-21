@@ -1,6 +1,9 @@
 package ee.praktika.aopdemo.aspect;
 
+import java.util.List;
+
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -13,6 +16,21 @@ import ee.praktika.aopdemo.Account;
 @Component
 @Order( 4 )
 public class MyDemoLoggingAspect {
+
+    //add a new advice for@AfterReturning on the findAccounts method
+    @AfterReturning( pointcut = "execution(* ee.praktika.aopdemo.dao.AccountDAO.findAccounts(..))", returning = "result" )
+    public void afterReturningFindAccountsAdvice(
+        JoinPoint theJoinPoint, List<Account> result ){
+
+        //print out which method are we advising on
+        String method = theJoinPoint.getSignature().toShortString();
+        System.out.println( "\n======>>> Executing @AfterReturning on method: " + method );
+
+        //print out the result of the method call
+        System.out.println( "\n======>>> result is: " + result );
+
+    }
+
     @Before( "ee.praktika.aopdemo.aspect.AopExpressions.referencePointcutIgnoreGetSet()" )
     public void beforeAddAccountAdvice( JoinPoint theJoinPoint ){
         System.out.println( "\n======>>> Executing @Before advice on addAccount() in the DAO package" );

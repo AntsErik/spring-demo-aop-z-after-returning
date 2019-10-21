@@ -1,5 +1,8 @@
 package ee.praktika.aopdemo.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import ee.praktika.aopdemo.Account;
@@ -9,6 +12,24 @@ public class AccountDAO {
 
     private String name;
     private String serviceCode;
+
+    //adding a new method: findAccounts()
+    public List<Account> findAccounts(){
+
+        List<Account> myAccounts = new ArrayList<>();
+
+        //create sample accounts
+        Account temp1 = new Account( "Ajani", "Mythic" );
+        Account temp2 = new Account( "Vraska", "Uncommon" );
+        Account temp3 = new Account( "Chandra", "Rare" );
+
+        //add tgem to our accoutns list
+        myAccounts.add( temp1 );
+        myAccounts.add( temp2 );
+        myAccounts.add( temp3 );
+
+        return myAccounts;
+    }
 
     public void addAccount( Account theAccount, boolean vipFlag ){
         System.out.println( getClass() + ": DOING MY DB WORK: ADDING AN ACCOUNT" );
